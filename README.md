@@ -8,7 +8,7 @@ https://drive.google.com/file/d/1hsYTn-7DWD-KHo9TBSqubd9j9PXK0hmU/view?usp=shari
 
 ## Deployed Project
 
-https://ebuy-ecom.vercel.app/
+Open this app using: https://ebuy-ecom.vercel.app/
 
 ## Features and Interfaces
 
