@@ -40,12 +40,10 @@ button:focus {
 }
 
 .leftDivStyle {
-  min-height: 100vh;
   margin: 1rem;
 }
 
 .rightDivStyle {
-  min-height: 100vh;
   margin: 1rem;
 }
 
@@ -65,11 +63,13 @@ button:focus {
   justify-content: space-between;
   align-items: center;
 }
+
 #carouselProductPage .carousel {
   width: 360px;
   height: 360px;
 }
-#carouselProductPage .carousel-inner > .carousel-item {
+
+#carouselProductPage .carousel-inner>.carousel-item {
   height: 360px;
 }
 
@@ -93,6 +93,7 @@ button:focus {
   background-color: #ededed;
   font-size: 1.2rem;
 }
+
 .ratings-button {
   background-color: #388e3c;
   border-radius: 0%;
@@ -136,13 +137,14 @@ button:focus {
   background-color: #e99497;
 }
 
-.carousel-inner > .item {
+.carousel-inner>.item {
   height: 100px;
 }
 
 .admin-img {
   background-color: red;
 }
+
 .intro {
   position: relative;
 }
@@ -162,17 +164,20 @@ button:focus {
   background-color: transparent;
   border: none;
 }
+
 .btn-icon:hover {
   background-color: transparent !important;
   border: none !important;
   outline: transparent !important;
 }
+
 .btn-icon:focus {
   background-color: transparent !important;
   border: none;
   outline: transparent;
   box-shadow: none;
 }
+
 .modal-body {
   color: black;
   font-size: 1rem;

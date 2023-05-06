@@ -18,6 +18,7 @@ router.post(
   isAdmin,
   upload.array("image"),
   catchAsync(async (req, res) => {
+    console.log("Product --->", req.body)
     const product = new Product(req.body);
     const images = [];
     req.files.forEach((file) => {
@@ -107,5 +108,11 @@ router.post("/api/razorpay", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+router.get("/api/products/:category", async (req, res) => {
+  const category = req.params.category;
+  console.log(category)
+  const products = await Product.find({ category });
+  res.send(products);
 });
 module.exports = router;

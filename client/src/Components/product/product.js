@@ -43,9 +43,9 @@ function Product(props) {
                 ? product.name.substring(0, 5) + '...'
                 : product.name.substring(0, 7)}
             </Typography>
-            <Typography variant="subtitle1" className="my-1 text-primary">
+            {/* <Typography variant="subtitle1" className="my-1 text-primary">
               {product.category}
-            </Typography>
+            </Typography> */}
             <div className="fs-6 text-center">
               {' '}
               Now ₹{product.discountPrice}{' '}

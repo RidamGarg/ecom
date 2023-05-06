@@ -127,11 +127,12 @@ class allProducts extends React.Component {
 
         <div className=" justify-content-around  mt-3 d-flex" id="allProducts">
           {data.map(function (product) {
+            console.log(product)
             return (
               <Link
                 to={`/product/${product._id}`}
                 style={{ textDecoration: 'none' }}
-                // className="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6 mb-5 d-grid float-start"
+              // className="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6 mb-5 d-grid float-start"
               >
                 <Product product={product} key={product._id} />
               </Link>

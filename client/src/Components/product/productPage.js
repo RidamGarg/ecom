@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { userAddedProduct } from '../../actions/cart';
-import { Navbar, Carousel, Flash } from '../';
+import { Navbar, Carousel, Flash, Product } from '../';
 
 import Styles from '../../stylesheets/productPage.css';
 
@@ -18,15 +18,24 @@ class productPage extends React.Component {
       product: null,
       added: false,
       modalText: 'Copy Link',
+      recommendedProducts: null
     };
   }
   componentDidMount = async () => {
     const { match } = this.props;
     const res = await axios.get(`/api/product/${match.params.productId}`);
+    const result = await axios.get(`/api/products/${res.data.category}`);
     this.setState({
       product: res.data,
+      recommendedProducts: result.data
     });
   };
+  fetchData = async (productId) => {
+    const res = await axios.get(`/api/product/${productId}`);
+    this.setState({
+      product: res.data
+    })
+  }
   handleClick = async () => {
     const { match } = this.props;
     this.props.dispatch(userAddedProduct(this.state.product._id));
@@ -45,9 +54,9 @@ class productPage extends React.Component {
     this.setState({ modalText: 'Copied' });
   };
   render() {
-    const { product, added } = this.state;
+    const { product, added, recommendedProducts } = this.state;
     const { isLoggedIn } = this.props.authUser;
-
+    const { fetchData } = this;
     if (!product) {
       return (
         <div className="d-flex justify-content-center align-items-center loadingPage">
@@ -108,7 +117,7 @@ class productPage extends React.Component {
                             class="btn btn-primary btn-icon"
                             data-toggle="modal"
                             data-target="#exampleModal"
-                            class="icon fas fa-share-alt"
+                            className="icon fas fa-share-alt"
                             style={{ marginLeft: 20 }}
                           ></i>
                         </div>
@@ -177,7 +186,7 @@ class productPage extends React.Component {
                         (product.discountPrice / product.marketPrice).toFixed(
                           2
                         ) *
-                          100}
+                        100}
                       % off
                     </h2>
                     <span className="stars">
@@ -212,6 +221,20 @@ class productPage extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="row justify-content-center mt-5">
+          <h1 className='text-center text-white mt-5 mb-3'>People Who Bought This Also Bought</h1>
+          <div className=" justify-content-around  mt-3 d-flex" id="allProducts">
+            {recommendedProducts && recommendedProducts.map(function (recomproduct) {
+              if (product._id !== recomproduct._id) {
+                return <div onClick={() => {
+                  fetchData(recomproduct._id)
+                }}>
+                  <Product product={recomproduct} key={recomproduct._id} />
+                </div>
+              }
+            })}
           </div>
         </div>
       </div>

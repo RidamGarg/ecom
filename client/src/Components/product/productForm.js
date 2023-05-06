@@ -13,6 +13,7 @@ import {
   Checkbox,
   Box,
 } from '@material-ui/core/';
+import axios from 'axios';
 
 import {
   RenderTextInput,
@@ -32,6 +33,7 @@ class ProductForm extends Component {
     super();
     this.state = {
       file: {},
+      admin: null
     };
   }
   onImageChange = (e) => {
@@ -43,6 +45,7 @@ class ProductForm extends Component {
     for (const key of Object.keys(this.state.file)) {
       formData.append('image', this.state.file[key]);
     }
+    formData.append('category', this.state.admin.category)
     for (let key in values) {
       formData.append(key, values[key]);
     }
@@ -52,10 +55,15 @@ class ProductForm extends Component {
   componentWillUnmount = () => {
     this.props.dispatch(productFormUnmount());
   };
-
+  componentDidMount = async () => {
+    const admin = await axios.get('/api/currentAdmin');
+    console.log("Admin--->", admin)
+    this.setState({ admin: admin.data });
+  };
   render() {
     const { handleSubmit, submitting } = this.props;
     const { isProductAdded } = this.props.product;
+    const { admin } = this.state;
     if (isProductAdded) {
       return <Redirect to="/admin/info" />;
     }
@@ -131,7 +139,8 @@ class ProductForm extends Component {
           </div>
         </div>
       </div>
-    );
+    )
+
   }
 }
 const ProductFormRedux = reduxForm({

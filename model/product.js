@@ -9,6 +9,7 @@ const productSchema = new Schema({
   marketPrice: Number,
   discountPrice: Number,
   description: String,
+  category: String,
   images: [ImageSchema],
   admin: {
     type: Schema.Types.ObjectId,

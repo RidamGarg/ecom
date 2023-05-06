@@ -58,14 +58,16 @@ mongoose.connect(dbUrl, {
 });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:")); //This file will run every time So there is no need to connect with mongodb further
-db.once("open", function () {});
+db.once("open", function () {
+  console.log("Connected");
+});
 app.use("/", productRouter);
 app.use("/", userRouter);
 app.use("/", adminRouter);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve("client", "build", "index.html"));
   });
 }
 app.use((err, req, res, next) => {
