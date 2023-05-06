@@ -65,9 +65,9 @@ app.use("/", productRouter);
 app.use("/", userRouter);
 app.use("/", adminRouter);
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname, "client/build"));
+  app.use(express.static(path.resolve("client", "build")));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve("client", "build", "index.html"));
   });
 }
 app.use((err, req, res, next) => {
