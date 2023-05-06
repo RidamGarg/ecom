@@ -18,7 +18,7 @@ class productPage extends React.Component {
       product: null,
       added: false,
       modalText: 'Copy Link',
-      recommendedProducts: null
+      recommendedProducts: null,
     };
   }
   componentDidMount = async () => {
@@ -27,15 +27,15 @@ class productPage extends React.Component {
     const result = await axios.get(`/api/products/${res.data.category}`);
     this.setState({
       product: res.data,
-      recommendedProducts: result.data
+      recommendedProducts: result.data,
     });
   };
   fetchData = async (productId) => {
     const res = await axios.get(`/api/product/${productId}`);
     this.setState({
-      product: res.data
-    })
-  }
+      product: res.data,
+    });
+  };
   handleClick = async () => {
     const { match } = this.props;
     this.props.dispatch(userAddedProduct(this.state.product._id));
@@ -186,7 +186,7 @@ class productPage extends React.Component {
                         (product.discountPrice / product.marketPrice).toFixed(
                           2
                         ) *
-                        100}
+                          100}
                       % off
                     </h2>
                     <span className="stars">
@@ -223,20 +223,38 @@ class productPage extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row justify-content-center mt-5">
-          <h1 className='text-center text-white mt-5 mb-3'>People Who Bought This Also Bought</h1>
-          <div className=" justify-content-around  mt-3 d-flex" id="allProducts">
-            {recommendedProducts && recommendedProducts.map(function (recomproduct) {
-              if (product._id !== recomproduct._id) {
-                return <div onClick={() => {
-                  fetchData(recomproduct._id)
-                }}>
-                  <Product product={recomproduct} key={recomproduct._id} />
-                </div>
-              }
-            })}
+        {recommendedProducts && recommendedProducts.length > 1 ? (
+          <div className="row justify-content-center mt-5">
+            <h1 className="text-center text-white mt-5 mb-3">
+              People Who Bought This Also Bought
+            </h1>
+
+            <div
+              className=" justify-content-around  mt-3 d-flex"
+              id="allProducts"
+            >
+              {recommendedProducts &&
+                recommendedProducts.map(function (recomproduct) {
+                  if (product._id !== recomproduct._id) {
+                    return (
+                      <div
+                        onClick={() => {
+                          fetchData(recomproduct._id);
+                        }}
+                      >
+                        <Product
+                          product={recomproduct}
+                          key={recomproduct._id}
+                        />
+                      </div>
+                    );
+                  }
+                })}
+            </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
     );
   }
